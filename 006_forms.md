@@ -266,3 +266,168 @@ OnSubmit(){
     console.log(this.signupForm);
 }
 ```
+
+## 4. Adding Validations
+Keep in mind we are just syncing our Form Controls with the HTML form.
+We aren't configuring it in HTML, so we can't use HTML validations as we used in Template Driven Appoach.
+##### component.ts
+```
+import { Validators } from '@angular/forms';
+ngOnInit(){
+    this.signupForm = new FormGroup({
+        'username' : new FormControl(null, Validators.required)
+        <!-- we need to pass the reference of Validators here we don't have to call it,
+        angular will execute them whenever the form data will change -->
+        'email': new FormControl(null,[Validators.required,Validators.email])
+        });  
+    })
+}
+```
+
+## Getting Access of Form Control Data
+##### component.html
+```
+<span *ngIf="!signupForm.get('username').valid">
+// get takes path to that element
+Error Occurred
+</span>
+```
+
+## Reactive Grouping Control
+##### component.ts
+```
+ngOnInit(){
+    this.signupForm = new FormGroup({
+        'userData' : new FormGroup({
+            'username' : new FormControl(null, Validators.required),
+            'email' : new FormControl(null, [Validators.required, Validators.email])
+        })
+        'password' : new FormControl(null,Validators.required)
+    });
+}
+```
+##### component.html
+```
+<form [formGroup]="signupForm">
+    <div formGroupName="userData">
+        <input formControlName="username">
+        <span *ngIf="!signupForm.get('userData.username')"> Error Occured </span>
+        <input formControlName="email">
+    </div>
+    <input formControlName="password">
+</form>
+```
+
+## Form Array
+For scenarios like adding Form Controls dynamically.
+##### component.html
+```
+<div formArrayName="hobbies" >
+    <h4> Add your Hobbies</h4>
+    <button (click)="onAddHobby()">Add Hobby</button>
+    <div *ngFor="let hobbyControl of signupForm.get('hobbies').controls;let i=index">
+        <input [formControlName]="i" >
+</div>
+```
+##### component.ts
+```
+ngOnInit(){
+    ...
+    'hobbies' : new FormArray([])
+    // FormArray holds an array of Controls
+}
+onAddHobby(){
+    const control = new FormControl(null);
+    (<FormArray>this.signupForm.get('hobbies')).push(control)
+}
+```
+
+## Custom Validators
+##### component.ts
+```
+forbiddenUsername = ['root','superuser','user'];
+ngOnInit(){
+    this.signupForm(){
+        'username' : new FormControl(null,[Validators.required,this.forbiddenNames.bind(this)])
+    }
+}
+
+//custom validator
+forbiddenNames(controls:FormControl):{[s:string]:boolean}{
+    // so it should return something like {'root':false}
+    if (this.forbiddenUsernames.indexOf(control.value)){
+        return {'nameIsForbidden',true};
+    }
+    // now if the validators is sucessful you have to pass **nothing** or **null**
+    // {'nameIsForbidden':false} won't work
+    return null;
+}
+```
+We need to bind "this" here as we are not calling the function.
+But rather angular is doing so therefore we need to bind the classe's "this".
+
+
+## Using Error Codes
+Every control has a attached Error property.
+We could use this error codes to output Error messages.
+Error codes could be found via console.log();
+##### component.html
+```
+<span *ngIf="!signupForm.get('userData.username').errors['nameIsForbidden']">
+Error Occurred
+</span>
+```
+
+## Custom Async Validators
+##### component.ts
+```
+import { Observables } from 'rxjs/Observables';
+
+ngOnInit(){
+    this.signupForm = new FormGroup({
+        'username' : new FormControl(null,Validators.this.forbiddenEmails)
+    });
+}
+
+forbiddenEmails(control:FormControl) : Promise<any> | Observable<any>{
+    const promise = new Promise<any>((resolve,reject)=>{
+        setTimeout(()=>{
+            if true
+                resolve("Email is Forbidden");
+            else
+                resolve(null);
+        },1500)
+    }
+}
+```
+
+## Status Changes and Value Changes
+statusChanges and valueChanges are two observables.
+##### component.ts
+```
+this.signupForm.valueChanges.subscribe(
+    (value) => console.log(value);
+    // executed every time value changes 
+);   
+
+this.signupForm.statusChanges.subscribe(
+    (status) => console.log(status);
+);
+```
+
+## setValue, patchValue and reset Form
+##### component.ts
+```
+this.signupForm.setValue({
+    // data as key:value here...
+});
+
+this.signupForm.patchValue({
+    'userData':{
+        'username' : 'root'
+    }
+})
+
+this.signupForm.reset();
+// note we could pass an object to reset to prevent some fields from getting cleared.
+```
