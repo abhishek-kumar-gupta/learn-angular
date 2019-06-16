@@ -8,7 +8,6 @@ Here we have two approaches to handle forms:
 Rather we will handle it using angular and sent it to server via Angular's HTTP methods.
 
 # Template Drive Approach
--------
 To start make sure you have imported the **"Forms Module"** in app.module.ts (in imports array).
 ##### app.module.ts
 ```
