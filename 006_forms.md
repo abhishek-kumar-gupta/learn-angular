@@ -90,5 +90,121 @@ But also it added some classes to the form control based on that.
 - ng-touched
 
 
+## Using the Form State
+##### component.html
+```
+<form #f="ngForm" (onSubmit)="OnSubmit()">
+    ...
+    <button type=submit [disabled]="f.invalid">Submit</button>
+    // disables button if form is not valid
+</form>
+```
+##### component.css
+```
+input.ng-invalid.ng-touched{
+    border : 1px solid red;
+}
+```
+We could also show some error msgs using *ngIf.
+
+## Validation Error Messages
+We could get access to control using local reference on that form control.
+##### component.html
+```
+<input #username="ngModel">
+<span *ngIf="username.invalid && username.touched">Please enter a valid username</span>
+```
+
+## Default values with ngModel Property Binding
+##### component.html
+```
+<input [ngModel]="variable">
+<input [ngModel]=" 'default value as string' ">
+<!-- -->
+```
+
+## Two way binding (NgModel)
+##### component.html
+```
+<textarea [(ngModel)]="answer">
+</textarea>
+```
+##### component.ts
+```
+answer="";
+```
+
+## Grouping Form Control
+Used in case if we have a big form and we want to group certain data so to create a structure.
+##### component.html
+```
+<div ngModelGroup="userData">
+    <!-- form controls here -->
+</div>
+```
+We could also get access to this form controls Java Script object using the NgModel as follows:
+```
+<form>
+    <div #userData="ngModelGroup">
+        ...
+    </div>
+</form>
+```
+
+## Handling Radio Buttons
+##### component.ts
+```
+genders = [ 'male', 'female' ];
+```
+##### component.html
+```
+<div *ngFor="let gender of genders">
+    <input type="radio" name="gender"> ngModel [value]="gender">{{ gender }}
+</div>
+```
+
+## Setting and Patching Values
+##### Approach 1
+This approach overwrites the whole content.
+##### component.ts
+```
+@ViewChild('f') signUpForm:NgForm;
+OnNgInit(){
+    this.signUpForm.setValue({
+    // whole form values as key:value pairs
+    username:'root',
+    email:''
+    ...
+    })
+}
+```
+
+##### Approach 2
+Best when we want to overwrite specific values.
+##### component.ts
+```
+@ViewChild('f') signUpForm:NgForm;
+OnNgInit(){
+    this.signUpForm.form.patchValue({
+        userdata:{
+            // user group
+            username:'root'
+        }
+    })
+}
+```
+
+## Resetting Form
+It now just clears out the data but also all the settings are reset.
+##### component.ts
+```
+@ViewChild('f') signupForm:NgForm;
+
+//method 1
+this.signupForm.reset();
+
+//method 2
+this.signupForm.setValue({});
+```
 
 # Reactive_Approach
