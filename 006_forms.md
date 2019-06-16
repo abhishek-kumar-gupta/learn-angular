@@ -55,3 +55,40 @@ import { NgForm } from '@angular/forms';
 ```
 
 ## Form State
+Each form control comes attached with certain properties, and same on the overall form.
+#### Some Properties
+- **dirty** :  false intially, true when we change something in the form.
+- **disabled** : true if form was disabled
+- **invalid** : true if some invalid values are passed into the fields (checked by Validators)
+- **touched** : true if we have clicked in some field.
+
+## Accessing Form using @ViewChild
+We could use **@ViewChild** to access the form data without needing it to be passed as a parameter.
+##### component.ts
+```
+@ViewChild('f') formData:NgForm;
+Onsubmit(){
+    console.log(this.formData);
+}
+```
+So we don't have to pass it to on submit here.
+And it allows form data to be accessed even before submitting (Eg: in case of Validators)
+
+
+## Validations
+Since we are using Template driven approach so we can use the HTML validators.
+##### Example
+- required
+- email
+** Look for HTML validators for more **
+Now it not only updates the values of **valid** & **invalid** properties.
+But also it added some classes to the form control based on that.
+##### These Classes are:
+- ng-dirty
+- ng-valid
+- ng-invalid
+- ng-touched
+
+
+
+
