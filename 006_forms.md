@@ -21,6 +21,6 @@ import { FormsModule } from "@angular/forms";
     ]
 })
 ```
-Angular automatically creates the Javascript respresentation of the form when it detects **"<form>"** selector in your code.
-So you can think of that form element serving as a selector for some angular directive which then creates the JS representation for you. Also, angular won't automatically detect your "<input>" and other elements of your form.
+Angular automatically creates the Javascript respresentation of the form when it detects **form** selector in your code.
+So you can think of that form element serving as a selector for some angular directive which then creates the JS representation for you. Also, angular won't automatically detect your "input" and other elements of your form.
 
