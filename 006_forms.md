@@ -37,15 +37,21 @@ So, we need to add form controls manually.
 ### 2. Submitting Form
 ##### component.html
 ```
-<form (ngSubmit)="onSubmit()" >
-    <!-- This event gets triggered when tis form get's submitted -->
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <!-- This event gets triggered when tis form get's submitted.
+    We pass local reference to access this form data 
+    We need to assing this local reference to **ngForm** ,
+    else we won't be able to access the form properly(as JSON { f['value'] object})-->
     ...
 </form>
 ```
 ##### component.ts
 ```
+import { NgForm } from '@angular/forms';
 // create a function that'll be called on submit
-    onSubmit(){
+    onSubmit(form:NgFrom){
         console.log("Submitted");
     }
 ```
+
+## Form State
