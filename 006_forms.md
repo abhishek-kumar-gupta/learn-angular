@@ -208,3 +208,61 @@ this.signupForm.setValue({});
 ```
 
 # Reactive_Approach
+To start make sure you have imported the **"Reactive Forms Module"** in app.module.ts (in imports array).
+We don't need **"Forms Module"** here.
+##### app.module.ts
+```
+import { ReactiveFormsModule } from "@angular/forms";
+@NgModule({
+    ...
+    imports:[
+    ... ,
+    ReactiveFormsModule
+    ]
+})
+```
+
+## 1. Creating Form
+We need to initalize it before the template is rendered.
+FormGroup is the object that holds the entire form.
+FormControls are the key value pairs.
+##### component.ts
+```
+import { FormsGroup,FormControl } from '@angular/forms';
+signupForm:FormGroup;
+ngOnInit(){
+    this.signupForm = new FormGroup({
+        'username' : new FormControl(null)
+        'email' : new FormContrl(null)
+        // 1st arg -->> Intial state/Intial Value
+        // 2nd arg -->> Single Validator or Array of Validators
+        // 3rd arg -->> Potential Async Validator
+    });
+}
+```
+
+## 2. Syncing HTML and Form
+##### component.html
+```
+<form [formGroup]="signupForm">
+ // form synced
+ <input formControlName="username">
+ <input formControlName="email">
+ <!-- use property binding while passing data, In case of strings use without square brackets -->
+</form>
+```
+
+## 3. Submitting Form
+##### component.html
+```
+<form [formGroup]="signupForm" (ngSubmit)="OnSubmit()">
+    <!-- here we don't need reference as we created the form own our own. -->
+    ...
+</form>
+```
+##### component.ts
+```
+OnSubmit(){
+    console.log(this.signupForm);
+}
+```
