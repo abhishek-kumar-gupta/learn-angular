@@ -103,3 +103,25 @@ onGet(){
     );
 }
 ```
+
+## Catching Errors
+Since, catch won't wrap our error into an observable so we need to create one own our own.
+##### servers.service.ts
+```
+import 'rxjs/RX';
+import { Response } from '@angular/http';
+getServers(){
+    return this.http.get(URL_HERE).map(
+            (response:Response) => {
+                const data = response.json();
+                return data;
+            }
+        )
+        .catch(
+            (error:Response) => {
+                // return Observable.throw(error); 
+                return Observable.throw("Custom Error Message"); 
+            }
+        );
+}
+```
