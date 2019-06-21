@@ -77,13 +77,13 @@ export class ShortenPipe implements PipeTransform{
 ##### component.html
 ```
 <div>
-    <input type="text"  [(ngModel)]="filteredData">
-    <li *ngFor="let line of data | filter:filterSting:'status' "> {{ line }} <li>
+    <input type="text"  [(ngModel)]="filterString">
+    <li *ngFor="let line of data | filter:filterString:'status' "> {{ line }} <li>
 </div>
 ```
 ##### component.ts
 ```
-filteredData:string="";
+filterString:string="";
 ```
 ##### let's create a pipe, ** >> ng g p filter**
 ##### filter.pipe.ts
