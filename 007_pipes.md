@@ -74,6 +74,9 @@ export class ShortenPipe implements PipeTransform{
 ```
 
 ## Filter Pipe (Example)
+```
+> ng g p pipe_name
+```
 ##### component.html
 ```
 <div>
