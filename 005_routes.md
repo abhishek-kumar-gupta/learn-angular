@@ -134,4 +134,16 @@ export class CanDeactivateComponent implements CanDeactivate<CanComponentDeactiv
 }
 ```
 
-##
+## Passing Static Data To Route
+##### app.module.ts
+```
+{ path: '/', data:{my_data:"DATA"}, ...}
+```
+##### component.ts
+```
+constructor(const route:ActivatedRoute){}
+data = this.route.snapshot.data['message'];
+```
+
+## Getting Dynamic Data
+Resolver basically preloads the data before rendering the route.
