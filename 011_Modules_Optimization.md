@@ -1,1 +1,44 @@
-# learn-angular
+# Modules
+### Module { Components + Directives + Other Modules etc. }
+All the elements that make up our app have to be registered into the module(or mutliple modules).
+So Bascially it allows us to choose what we need ( and more importantly ) what we don't need.
+
+### Declarations
+It consists of Components, Directives and Pipes that our Module uses.
+
+### Imports
+The other modules this module uses.
+When we import a module we basically get everything that it exports.
+Eg: FormsModule defines some directives that we use while dealing with forms.
+
+The **providers** array simply defines which services we may use in this module.
+Everything we provide here will be available for the whole app.
+
+The **bootstrap** array defines the root component. The main component where we start registering other components.
+
+## Feature Modules
+A custom module that contains a certain feature that make up some part of the app.
+##### auth.module.ts
+```
+import { NgModule } from '@angular/core';
+@NgModules({
+    declarations : [ All the components used by this feature ],
+    import : [],
+    providers : [ CommonModule ]
+    // Common Modules is to be required in almost every feature module
+    // it provides access to directives such as ngFor,ngIf etc.
+})
+export class AuthModule{
+    
+}
+```
+##### app.module.ts
+```
+imports:[ AuthModule ]
+```
+##### - Nothing ( Pipe,Component,Directive etc ) could be declared in two modules. 
+##### - Services could be provided in multiple modules.
+##### - BrowserModules ( CommonModule + some additional features ) contains features that are required mostly when the application starts. So it's only required by the main Module.
+
+# Routing
+If we create a feature module we have to move the routes related to that feature module.
