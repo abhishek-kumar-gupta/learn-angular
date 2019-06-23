@@ -1,4 +1,4 @@
-# Modules
+oet# Modules
 ### Module { Components + Directives + Other Modules etc. }
 All the elements that make up our app have to be registered into the module(or mutliple modules).
 So Bascially it allows us to choose what we need ( and more importantly ) what we don't need.
@@ -133,3 +133,4 @@ import { PreloadAllModules } from '@angular/router';
     ]
 })
 ```
+Note: Custom Preloading Strategy could also be written.
