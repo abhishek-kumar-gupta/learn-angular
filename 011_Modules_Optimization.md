@@ -42,3 +42,43 @@ imports:[ AuthModule ]
 
 # Routing
 If we create a feature module we have to move the routes related to that feature module.
+##### auth-routing.module.ts
+```
+const authRoutes:Routes=[];
+@NgModule({
+ imports:[
+ RouterModule.forChild()
+ ],
+ exports :[ RouterModule ]
+})
+export class AuthRoutingModules{
+    
+}
+```
+##### auth.module.ts
+```
+@NgModule({
+    imports : [ AuthRoutingModule ]
+})
+
+```
+
+# Shared Module
+Say we have a custom directive that is being used by multiple Feature Modules. So in that case we build Shared Module.
+So to share the part that is being used by multiple shared modules.
+##### shared.module.ts
+```
+import { NgModules } from '@angular/core';
+@NgModules({
+    declarations : [ DropDownDirective ],
+    exports : [ DropDownDirective ]
+})
+export SharedModule{}
+```
+##### feature.module.ts
+```
+@NgModule({
+    imports : [ SharedModule ]
+})
+```
+
