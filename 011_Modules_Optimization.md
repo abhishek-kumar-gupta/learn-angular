@@ -82,3 +82,15 @@ export SharedModule{}
 })
 ```
 
+# Lazy Loading
+Instead of loading all the components at the beginning it allows us to load the Modules when we visit any route leading to that module.
+By default the app loads **Eagerly**, that is when we load the application everything in the imports get loaded.
+To implement **Lazy Loading**.
+##### app-routing.module.ts
+```
+// remove all modules to lazy load from app.module.ts
+ { path :'dashboard', loadChildren:'./path_here/dashboard-module#DashboardModule' }
+ // path#ClassName
+```
+
+# Module and Service Injection
