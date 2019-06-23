@@ -18,6 +18,7 @@ The **bootstrap** array defines the root component. The main component where we 
 
 ## Feature Modules
 A custom module that contains a certain feature that make up some part of the app.
+####NOTE:  We need to export components if we wish to use the selector.
 ##### auth.module.ts
 ```
 import { NgModule } from '@angular/core';
@@ -94,3 +95,41 @@ To implement **Lazy Loading**.
 ```
 
 # Module and Service Injection
+If we provide a service in AppModule and a Feature Module. They use a common Root Injector(One Instance of the service).
+Whereas if we provide a service to a Lazy Loaded Feature Module then it uses a Child Injector( a different instance of the service).
+We could also enforce the **Module Scope** by providing it in a Component instead of a Module.
+Also, providing a Service on a Shared module provides a Child Injector (a different Instance of the Service everytime)
+
+# Core Modules
+The features that are only used by the App Module are to be put in Core Module.
+Only for restructuring reasons.
+
+# AOT(Ahead Of Time) and JIT(Just In Time) Compilation
+It doesn't mean compiling Typescript to Javascript.
+Angular need to compile your templates.(HTML, CSS etc).
+It could be done in two ways:
+- Just In Time (Default)
+- Ahead Of Time
+
+In JOT Developement --> Production --> App downloaded in Browser --> Angular Parses & Compiles Templates (to JS).
+In AOT Developement --> Angular Parses & Compiles Templates(in JS) --> Production --> App downloaded in Browser
+##### Advantages of AOT
+- **Faster Startup** since Parsing and Compilation doesn't happen in Browser.
+- **Templates gets checked during Developement**
+- **Smaller File Size** as unused Features can be stripped out and Compiler itself isn't shipped.
+
+##### using AOT
+```
+ng build --prod --aot 
+```
+
+# Preloading Lazy Loaded Routes
+##### app-routing.module.ts
+```
+import { PreloadAllModules } from '@angular/router';
+@NgModule({
+    imports : [
+    RouterModule.forRoot(appRoutes,{ preloadingStrategy : PreloadAllModules })
+    ]
+})
+```
